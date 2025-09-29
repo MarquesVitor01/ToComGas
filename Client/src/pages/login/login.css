@@ -1,0 +1,300 @@
+.cx-decoration__lines {
+  --lines-top-shift: -3.75rem;
+  position: absolute;
+  max-height: 100%;
+  fill: #79a3d9;
+  opacity: 0.9;
+}
+
+.cx-decoration__lines:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.cx-decoration__bottom-left-lines,
+.cx-decoration__bottom-right-lines,
+.cx-decoration__top-left-lines,
+.cx-decoration__top-right-lines {
+  display: none;
+}
+
+@media (min-width: 35.5em) {
+  .cx-decoration__top-left-lines {
+    display: block;
+    max-width: 24.25rem;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    transform: translateY(var(--lines-top-shift));
+  }
+
+  .cx-decoration__top-left-lines:dir(rtl) {
+    transform: translateY(var(--lines-top-shift)) scaleX(-1);
+  }
+
+  .cx-decoration__bottom-right-lines {
+    display: block;
+    max-width: 50.875rem;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+  }
+}
+
+@media (min-width: 50em) {
+  .cx-decoration__top-right-lines {
+    display: block;
+    max-width: 28.5625rem;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    transform: translateY(var(--lines-top-shift));
+  }
+
+  .cx-decoration__top-right-lines:dir(rtl) {
+    transform: translateY(var(--lines-top-shift)) scaleX(-1);
+  }
+
+  .cx-decoration__bottom-left-lines {
+    display: block;
+    max-width: 12.8125rem;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.Home {
+  background: linear-gradient(90deg, #464e80, #800020);
+  z-index: -2;
+}
+
+.Home h1,
+small {
+  color: #161616;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: 1;
+}
+
+.box-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 500px;
+  height: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  padding: 20px;
+  z-index: 2;
+}
+
+.inputs-login {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputs-login .form-control {
+  text-align: center;
+  font-size: 18px;
+  width: 450px;
+  margin: 15px auto;
+  background-color: #fff !important;
+}
+
+.btn-login {
+  background: #7d8be7 !important;
+  font-size: 19px !important;
+  transition: all 0.2s ease-in-out !important;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  position: relative;
+  width: 70%;
+}
+
+.btn-login:hover {
+  background-color: #4e5687 !important;
+  color: #000 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  scale: 1.1;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container .toggle-password {
+  position: absolute;
+  right: 3%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #000000;
+}
+
+.form-check {
+  z-index: 2;
+}
+
+.form-check-input {
+  z-index: 2;
+  margin-top: 30px;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+  color: #2b2b2b;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.password-visible {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #000;
+}
+
+.recuperar-senha {
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.recuperar-senha-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width: 450px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  box-shadow: 10px 0 15px rgba(0, 0, 0, 0.2);
+  padding-inline: 20px;
+}
+
+.recuperar-senha-content h2 {
+  color: #ffffff;
+}
+
+.recuperar-senha-content input {
+  width: 70%;
+  border: 1px solid #000;
+}
+
+.recuperar-senha-content .btn-recuperar {
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.recuperar-senha-content .btn-fechar {
+  position: absolute;
+  top: 23.5%;
+  right: 36%;
+  color: #fff;
+  border-radius: 25px;
+}
+
+.circle {
+  content: "";
+  background: linear-gradient(
+    360deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0)
+  );
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0; /* Começa invisível */
+  transition: all 0.5s ease-in-out; /* Transição suave */
+}
+
+.circle.surging {
+  animation: surge 0.9s ease-in-out forwards; /* Animação de surgimento */
+  opacity: 1; /* Torna-se visível durante a animação */
+}
+
+@keyframes surge {
+  0% {
+    transform: translateY(100px); /* Começa fora da tela (para baixo) */
+    opacity: 0; /* Começa invisível */
+  }
+  100% {
+    transform: translateY(0); /* Volta para a posição original */
+    opacity: 1; /* Fica visível */
+  }
+}
+
+/* Defina as posições e tamanhos dos círculos */
+.circle:nth-child(1) {
+  width: 30px;
+  height: 30px;
+  top: 40%;
+  left: 20%;
+}
+
+.circle:nth-child(2) {
+  width: 50px;
+  height: 50px;
+  left: 75%;
+  top: 30%;
+}
+
+.circle:nth-child(3) {
+  width: 35px;
+  height: 35px;
+  top: 10%;
+  left: 10%;
+}
+
+.circle:nth-child(4) {
+  width: 45px;
+  height: 45px;
+  left: 5%;
+  top: 76%;
+}
+
+.circle:nth-child(5) {
+  width: 66px;
+  height: 66px;
+  left: 90%;
+  top: 84%;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
