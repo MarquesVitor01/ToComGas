@@ -18,24 +18,29 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   const [weight, setWeight] = useState("");
   const [pickupPrice, setPickupPrice] = useState("");
   const [deliveryPrice, setDeliveryPrice] = useState("");
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     if (product) {
       setName(product.name);
       setWeight(product.weight);
+      setQuantity(product.quantity);
       setPickupPrice(
-        new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2 })
-          .format(Number(product.pickupPrice))
+        new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2 }).format(
+          Number(product.pickupPrice)
+        )
       );
       setDeliveryPrice(
-        new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2 })
-          .format(Number(product.deliveryPrice))
+        new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2 }).format(
+          Number(product.deliveryPrice)
+        )
       );
     } else {
       setName("");
       setWeight("");
       setPickupPrice("");
       setDeliveryPrice("");
+      setQuantity(0);
     }
   }, [product, isOpen]);
 
@@ -60,57 +65,110 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       weight,
       pickupPrice: parseCurrency(pickupPrice),
       deliveryPrice: parseCurrency(deliveryPrice),
+      quantity,
     });
-    onClose(); // fecha após salvar
+    onClose(); 
   };
 
   // 🔥 aqui está a correção
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" style={{ zIndex: 200 }}>
-      <div className="modal-content p-4 rounded bg-white max-w-md mx-auto mt-20 shadow-lg">
-        <h2 className="text-xl font-bold mb-4">
-          {product ? "Editar Produto" : "Criar Produto"}
-        </h2>
-        <div className="flex flex-col gap-2 mb-4">
-          <input
-            className="border rounded px-2 py-1"
-            placeholder="Nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="border rounded px-2 py-1"
-            placeholder="Peso (ex: 13,5)"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
-          <input
-            className="border rounded px-2 py-1"
-            placeholder="Preço Retirada"
-            value={pickupPrice}
-            onChange={(e) => setPickupPrice(formatCurrency(e.target.value))}
-          />
-          <input
-            className="border rounded px-2 py-1"
-            placeholder="Preço Entrega"
-            value={deliveryPrice}
-            onChange={(e) => setDeliveryPrice(formatCurrency(e.target.value))}
-          />
-        </div>
-        <div className="flex justify-center gap-2">
-          <button className="btn btn-primary" onClick={handleSave}>
-            {product ? "Salvar" : "Criar"}
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fadeInScale">
+        <div className="flex items-center justify-between border-b pb-3 mb-4">
+          <h2 className="text-xl font-semibold text-gray-800">
+            {product ? "Editar Produto" : "Criar Produto"}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 transition"
+          >
+            ✕
           </button>
-          <button className="btn btn-secondary" onClick={onClose}>
+        </div>
+
+        {/* Form */}
+        <div className="flex flex-col space-y-4 mb-6">
+          {/* Nome */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">
+              Nome do Produto
+            </label>
+            <input
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: Botijão de Gás"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          {/* Peso */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">Peso</label>
+            <input
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: 13,5"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">
+              Quantidade de estoque
+            </label>
+            <input
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: 10"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+          </div>
+          {/* Preço Retirada */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">
+              Preço Retirada
+            </label>
+            <input
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: R$ 90,00"
+              value={pickupPrice}
+              onChange={(e) => setPickupPrice(formatCurrency(e.target.value))}
+            />
+          </div>
+
+          {/* Preço Entrega */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">
+              Preço Entrega
+            </label>
+            <input
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: R$ 95,00"
+              value={deliveryPrice}
+              onChange={(e) => setDeliveryPrice(formatCurrency(e.target.value))}
+            />
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-end gap-3">
+          <button
+            className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition"
+            onClick={onClose}
+          >
             Cancelar
+          </button>
+          <button
+            className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+            onClick={handleSave}
+          >
+            {product ? "Salvar" : "Criar"}
           </button>
         </div>
       </div>
     </div>
   );
 };
-
 
 export default EditProductModal;

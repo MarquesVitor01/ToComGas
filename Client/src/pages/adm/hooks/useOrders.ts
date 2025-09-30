@@ -26,6 +26,11 @@ export const useOrders = () => {
 
         return {
           id: docSnap.id,
+          numberOrder: data.numberOrder,
+          paymentMethod: data.paymentMethod,
+          needsChange: data.needsChange,
+          changeAmount: data.changeAmount,
+          deliveryType: data.deliveryType,
           status: data.status as Order["status"],
           createdAt:
             data.createdAt instanceof Timestamp

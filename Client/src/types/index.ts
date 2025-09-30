@@ -1,5 +1,4 @@
 export interface Customer {
-  id: string;
   name: string;
   phone: string;
   address: {
@@ -15,8 +14,9 @@ export interface GasProduct {
   id: string;
   name: string;
   weight: string;
-  pickupPrice: number;   // <-- number
+  pickupPrice: number;  
   deliveryPrice: number; 
+  quantity: number;
 }
 
 export type OrderStatus = 'pending' | 'preparing' | 'out_for_delivery' | 'delivered';
@@ -32,7 +32,12 @@ export interface Order {
   totalAmount: number;
   createdAt: Date;
   deliveryDate?: Date;
+  deliveryType: 'pickup' | 'delivery';
   notes?: string;
+  numberOrder: number;
+  paymentMethod: string;
+  needsChange?: boolean;
+  changeAmount?: string;
 }
 
 export interface OrderStats {

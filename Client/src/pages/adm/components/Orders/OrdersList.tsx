@@ -14,13 +14,17 @@ export const OrdersList = ({ orders, onStatusChange }: OrdersListProps) => {
 
   const filteredOrders = orders.filter((order) => {
     const customerName = order.customer?.name?.toLowerCase() ?? '';
+    const customerAddressStreet = order.customer?.address.street?? '';
+    const customerAddressNeighborhood = order.customer?.address.neighborhood?? '';
     const customerPhone = order.customer?.phone ?? '';
-    const orderId = order.id ?? '';
+    const orderId = order.numberOrder ?? 0;
 
     const matchesSearch =
       customerName.includes(searchTerm.toLowerCase()) ||
       customerPhone.includes(searchTerm) ||
-      orderId.includes(searchTerm);
+      customerAddressStreet.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customerAddressNeighborhood.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      orderId.toString().includes(searchTerm);
 
     const matchesStatus =
       statusFilter === 'all' || order.status === statusFilter;
@@ -28,6 +32,8 @@ export const OrdersList = ({ orders, onStatusChange }: OrdersListProps) => {
     return matchesSearch && matchesStatus;
   });
 
+
+  console.log(searchTerm)
   return (
     <div className="space-y-6">
       <div>
@@ -37,7 +43,6 @@ export const OrdersList = ({ orders, onStatusChange }: OrdersListProps) => {
         </p>
       </div>
 
-      {/* Barra de busca e filtro */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
