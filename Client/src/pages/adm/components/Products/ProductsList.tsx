@@ -86,41 +86,41 @@ const ProductsList: React.FC = () => {
   };
 
   const handleSaveEdit = async (
-  updated: Omit<GasProduct, "id"> & { id?: string }
-) => {
-  if (!updated.id) return;
+    updated: Omit<GasProduct, "id"> & { id?: string }
+  ) => {
+    if (!updated.id) return;
 
-  try {
-    // Referência ao documento no Firestore
-    const productRef = doc(db, "produtos", updated.id);
+    try {
+      // Referência ao documento no Firestore
+      const productRef = doc(db, "produtos", updated.id);
 
-    // Atualiza os campos no Firestore
-    await updateDoc(productRef, {
-      name: updated.name,
-      weight: updated.weight,
-      pickupPrice: updated.pickupPrice,
-      deliveryPrice: updated.deliveryPrice,
-      quantity: updated.quantity,
-    });
-    const updatedProduct: GasProduct = {
-      id: updated.id,
-      name: updated.name,
-      weight: updated.weight,
-      pickupPrice: updated.pickupPrice,
-      deliveryPrice: updated.deliveryPrice,
-      quantity: updated.quantity,
-    };
+      // Atualiza os campos no Firestore
+      await updateDoc(productRef, {
+        name: updated.name,
+        weight: updated.weight,
+        pickupPrice: updated.pickupPrice,
+        deliveryPrice: updated.deliveryPrice,
+        quantity: updated.quantity,
+      });
+      const updatedProduct: GasProduct = {
+        id: updated.id,
+        name: updated.name,
+        weight: updated.weight,
+        pickupPrice: updated.pickupPrice,
+        deliveryPrice: updated.deliveryPrice,
+        quantity: updated.quantity,
+      };
 
-    setProducts((prev) =>
-      prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-    );
+      setProducts((prev) =>
+        prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+      );
 
-    setEditModalOpen(false);
-    setSelectedProduct(null);
-  } catch (error) {
-    console.error("Erro ao atualizar produto:", error);
-  }
-};
+      setEditModalOpen(false);
+      setSelectedProduct(null);
+    } catch (error) {
+      console.error("Erro ao atualizar produto:", error);
+    }
+  };
 
   const handleDelete = async (product: GasProduct) => {
     if (!product.id) return;
@@ -183,7 +183,7 @@ const ProductsList: React.FC = () => {
                   <span className="text-gray-500 mb-2">
                     {product.weight} kg
                   </span>
-                  
+
                   <div className="flex gap-2 mt-2">
                     <button
                       className="px-1 py-1 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500"
@@ -202,9 +202,17 @@ const ProductsList: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <span className="text-gray-500 mb-2 text-sm font-bold">
-                    Estoque: {product.quantity}
-                  </span>
+                <span
+                  className={`font-bold text-gray-500 text-sm ${
+                    product.quantity <= 1
+                      ? "text-red-500"
+                      : product.quantity < 5
+                      ? "text-orange-500"
+                      : "text-green-600"
+                  }`}
+                >
+                  Estoque: {product.quantity}
+                </span>
                 <span className="text-blue-600 font-bold text-xl mb-2">
                   {new Intl.NumberFormat("pt-BR", {
                     style: "currency",

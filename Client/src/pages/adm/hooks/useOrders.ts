@@ -19,7 +19,6 @@ export const useOrders = () => {
 
   useEffect(() => {
     const pedidosRef = collection(db, "pedidos");
-
     const unsubscribe = onSnapshot(pedidosRef, (snapshot) => {
       const fetchedOrders: Order[] = snapshot.docs.map((docSnap) => {
         const data = docSnap.data() as DocumentData;

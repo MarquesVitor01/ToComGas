@@ -51,10 +51,6 @@ function LoginScreen() {
       return;
     }
 
-    if (!recuperarEmail.endsWith('@grupomapscartaodigital.com.br')) {
-      setError('Apenas emails com o domínio @grupomapscartaodigital.com.br podem receber a recuperação de senha.');
-      return;
-    }
 
     try {
       await sendPasswordResetEmail(auth, recuperarEmail);
